@@ -1,0 +1,21 @@
+stages:
+  - prepare
+  - build
+
+prepare:
+  stage: prepare
+  script:
+    - med prepare -n prepare
+
+build:
+  stage: build
+  script:
+    - skipSonar=true med build -n build
+
+release:
+  stage: build
+  only:
+    - tags
+    - develop
+  script:
+    - skipSonar=true med build -n release
